@@ -1,0 +1,86 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Control Center{% endblock %}
+
+{% block content %}
+
+<section class="section admin-section">
+    <div class="eyebrow">ECOPONTS MANAGEMENT</div>
+    <h1>Admin <span>Control Center.</span></h1>
+    <p>Manage recycling requests and verify collections.</p>
+
+    <div class="dashboard-stats">
+        <div class="dash-card">
+            <div class="dash-icon">👥</div>
+            <div class="dash-number">{{ stats.users }}</div>
+            <p>Community members</p>
+        </div>
+
+        <div class="dash-card">
+            <div class="dash-icon">📦</div>
+            <div class="dash-number">{{ stats.requests }}</div>
+            <p>Total requests</p>
+        </div>
+
+        <div class="dash-card">
+            <div class="dash-icon">⏳</div>
+            <div class="dash-number">{{ stats.pending }}</div>
+            <p>Pending</p>
+        </div>
+
+        <div class="dash-card">
+            <div class="dash-icon">♻️</div>
+            <div class="dash-number">{{ stats.collected }}</div>
+            <p>Collected</p>
+        </div>
+    </div>
+
+    <h2>Collection management</h2>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Location</th>
+                <th>Points</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for r in requests %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>{{ r.item }}</td>
+                <td>{{ r.quantity }}</td>
+                <td>{{ r.location }}</td>
+                <td>{{ r.points }}</td>
+                <td>{{ r.status }}</td>
+                <td>
+                    {% if r.status == 'Pending' %}
+                    <form method="POST"
+                    action="{{ url_for('update_request', request_id=r.id, action='Collected') }}">
+                        <button class="small-btn" type="submit">Approve</button>
+                    </form>
+
+                    <form method="POST"
+                    action="{{ url_for('update_request', request_id=r.id, action='Rejected') }}">
+                        <button class="small-btn reject" type="submit">Reject</button>
+                    </form>
+                    {% else %}
+                        Completed
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">No collection requests yet.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+
+{% endblock %}

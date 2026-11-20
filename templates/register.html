@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}Join EcoPoints{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+    <div class="form-icon">🌍</div>
+    <div class="eyebrow">BE PART OF THE CHANGE</div>
+    <h1>Let's make<br><span>green happen.</span></h1>
+    <p>Create your account and begin earning EcoPoints.</p>
+
+    <form method="POST">
+        <label>Your name</label>
+        <input type="text" name="name"
+               placeholder="Enter your name" required>
+
+        <label>Email address</label>
+        <input type="email" name="email"
+               placeholder="you@example.com" required>
+
+        <label>Create password</label>
+        <input type="password" name="password"
+               minlength="8" placeholder="Minimum 8 characters" required>
+
+        <button type="submit" class="btn-primary full-button">
+            Create my account ↗
+        </button>
+    </form>
+
+    <p class="form-bottom">
+        Already a member? <a href="/login">Login</a>
+    </p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+
+{% block title %}Recycle E-Waste | EcoPoints{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="form-icon">♻️</div>
+
+    <div class="eyebrow">MAKE YOUR GREEN MOVE</div>
+
+    <h1>
+        Give your e-waste<br>
+        a <span>second chance.</span>
+    </h1>
+
+    <p>
+        Tell us about your electronic waste.
+        We'll calculate your estimated reward.
+    </p>
+
+    <form method="POST" id="recycleForm">
+
+        <label for="item">What would you like to recycle?</label>
+
+        <select name="item" id="item" required>
+            <option value="">Choose your e-waste</option>
+
+            {% for item, points in rewards.items() %}
+                <option value="{{ item }}">{{ item }}</option>
+            {% endfor %}
+
+        </select>
+
+        <label for="quantity">How many items?</label>
+
+        <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            value="1"
+            min="1"
+            max="100"
+            required
+        >
+
+        <label for="location">Collection location</label>
+
+        <textarea
+            name="location"
+            id="location"
+            placeholder="Enter your area or collection address"
+            rows="4"
+            required
+        ></textarea>
+
+        <div class="reward-preview">
+
+            <span>YOUR ESTIMATED REWARD</span>
+
+            <strong id="estimate">0 ✳</strong>
+
+            <small>
+                Points are credited after collection verification.
+            </small>
+
+        </div>
+
+        <button type="submit" class="btn-primary full-button">
+            Submit recycling request ↗
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+    const rewards = {{ rewards | tojson | safe }};
+
+    const item = document.getElementById("item");
+    const quantity = document.getElementById("quantity");
+    const estimate = document.getElementById("estimate");
+
+    function calculatePoints() {
+        const points = Number(rewards[item.value]) || 0;
+        const count = Number(quantity.value) || 0;
+
+        estimate.textContent = (points * count) + " ✳";
+    }
+
+    item.addEventListener("change", calculatePoints);
+    quantity.addEventListener("input", calculatePoints);
+
+    calculatePoints();
+</script>
+
+{% endblock %}

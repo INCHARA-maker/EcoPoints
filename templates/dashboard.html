@@ -1,0 +1,257 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Eco Journey | EcoPoints{% endblock %}
+
+{% block content %}
+
+<!-- DASHBOARD HEADER -->
+
+<section class="dashboard-header">
+    <div>
+        <div class="eyebrow">YOUR PERSONAL ECO SPACE</div>
+        <h1>Hello, {{ user.name }} 🌿</h1>
+        <p>Every item you recycle is another step towards a cleaner planet.</p>
+    </div>
+
+    <a href="/submit" class="btn-primary">+ Recycle an item</a>
+</section>
+
+
+<!-- DASHBOARD STATISTICS -->
+
+<section class="dashboard-stats">
+
+    <div class="dash-card points-main">
+        <span class="dash-label">YOUR ECOPOINTS</span>
+
+        <div class="big-number">
+            {{ user.points }} <span>✳</span>
+        </div>
+
+        <p>Your verified recycling rewards</p>
+    </div>
+
+    <div class="dash-card">
+        <div class="dash-icon">♻️</div>
+        <div class="dash-number">{{ collected_items }}</div>
+        <p>Items recycled</p>
+    </div>
+
+    <div class="dash-card">
+        <div class="dash-icon">🏆</div>
+        <div class="dash-number">{{ badges|length }}</div>
+        <p>Badges unlocked</p>
+    </div>
+
+</section>
+
+
+<!-- PROGRESS AND CHALLENGE -->
+
+<section class="dashboard-grid">
+
+    <!-- ECO HERO PROGRESS -->
+
+    <div class="panel">
+
+        <div class="panel-heading">
+            <div>
+                <div class="eyebrow">LEVEL UP</div>
+                <h2>Your Eco Hero Journey</h2>
+            </div>
+
+            <span class="panel-emoji">🌱</span>
+        </div>
+
+        {% if next_badge %}
+
+            <h3>{{ next_badge.icon }} {{ next_badge.name }}</h3>
+
+            <p>
+                You're making progress!
+                Keep going to unlock your next badge.
+            </p>
+
+            <div class="progress-track">
+                <div class="progress-fill"
+                     style="width: {{ progress|int }}%;">
+                </div>
+            </div>
+
+            <div class="progress-info">
+                <span>{{ progress }}% completed</span>
+                <strong>{{ points_needed }} points to go</strong>
+            </div>
+
+        {% else %}
+
+            <h3>🏆 Eco Legend achieved!</h3>
+
+            <p>
+                You've unlocked every achievement.
+                Keep inspiring the community!
+            </p>
+
+            <div class="progress-track">
+                <div class="progress-fill" style="width: 100%;">
+                </div>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ECO CHALLENGE -->
+
+    <div class="panel challenge-panel">
+
+        <div class="eyebrow">YOUR ECO CHALLENGE</div>
+
+        <h2>Three is the magic number! 🌍</h2>
+
+        <p>Recycle 3 items and complete your personal challenge.</p>
+
+        <div class="challenge-count">
+            {{ challenge_progress }}
+            <span>/ {{ challenge_goal }} items</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill"
+                 style="width: {{ ((challenge_progress / challenge_goal * 100)|int) if challenge_goal else 0 }}%;">
+            </div>
+        </div>
+
+        {% if challenge_progress >= challenge_goal %}
+
+            <p class="success-text">
+                🎉 Challenge completed! Amazing work!
+            </p>
+
+        {% else %}
+
+            <p>
+                {{ challenge_goal - challenge_progress }}
+                more collected items to go. You can do it!
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section class="section dashboard-section">
+
+    <div class="section-heading left-heading">
+        <div class="eyebrow">YOUR ACHIEVEMENTS</div>
+        <h2>Little victories. <span>Big pride.</span></h2>
+    </div>
+
+    <div class="badge-grid">
+
+        {% for badge in badges %}
+
+            <div class="achievement earned">
+                <div class="badge-icon">{{ badge.icon }}</div>
+                <h3>{{ badge.name }}</h3>
+                <span>✓ UNLOCKED</span>
+            </div>
+
+        {% endfor %}
+
+
+        {% for badge in [
+            {"name": "Green Beginner", "points": 100, "icon": "🌱"},
+            {"name": "Eco Explorer", "points": 300, "icon": "🌿"},
+            {"name": "Planet Protector", "points": 700, "icon": "🌍"},
+            {"name": "Eco Legend", "points": 1500, "icon": "🏆"}
+        ] %}
+
+            {% if user.points < badge.points %}
+
+                <div class="achievement locked">
+                    <div class="badge-icon">{{ badge.icon }}</div>
+                    <h3>{{ badge.name }}</h3>
+                    <span>{{ badge.points }} POINTS REQUIRED</span>
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- RECYCLING HISTORY -->
+
+<section class="section dashboard-section">
+
+    <div class="section-heading left-heading">
+        <div class="eyebrow">YOUR ACTIVITY</div>
+        <h2>Your recycling <span>history.</span></h2>
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Reward</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for r in requests %}
+
+                    <tr>
+                        <td>{{ r.item }}</td>
+                        <td>{{ r.quantity }}</td>
+                        <td>{{ r.points }} points</td>
+
+                        <td>
+                            <span class="status {{ r.status|lower }}">
+                                {{ r.status }}
+                            </span>
+                        </td>
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="4">
+                            Your journey starts with your first recycling request!
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- MOTIVATION MESSAGE -->
+
+<div class="encouragement">
+    💚 You're not just recycling electronics.
+    You're building a better habit.
+</div>
+
+{% endblock %}

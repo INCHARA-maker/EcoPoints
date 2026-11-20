@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}EcoPoints{% endblock %}</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">
+        <span class="logo-icon">✳</span> eco<span>points</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/leaderboard">Leaderboard</a>
+
+        {% if session.get('user_id') %}
+            {% if session.get('email') == 'admin@ecopoints.com' %}
+                <a href="/admin">Admin Panel</a>
+            {% else %}
+                <a href="/dashboard">My Journey</a>
+                <a href="/submit">Recycle</a>
+            {% endif %}
+            <a href="/logout" class="nav-cta">Logout ↗</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register" class="nav-cta">Join the movement ↗</a>
+        {% endif %}
+    </div>
+</nav>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p>✦ {{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="footer-logo">✳ ecopoints</div>
+    <p>Small actions. Big impact. A greener tomorrow.</p>
+    <p class="copyright">© 2026 EcoPoints. Recycle responsibly.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

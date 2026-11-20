@@ -1,0 +1,136 @@
+
+{% extends "base.html" %}
+
+{% block title %}EcoPoints | Make Every Device Matter{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">✦ THE FUTURE IS CIRCULAR</div>
+
+        <h1>
+            Your old tech.<br>
+            <span>Our greener</span><br>
+            tomorrow.
+        </h1>
+
+        <p class="hero-description">
+            That forgotten phone in your drawer?
+            It deserves a better ending. Recycle electronic waste,
+            earn rewards and become a part of something meaningful.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/register" class="btn-primary">
+                Start your eco journey ↗
+            </a>
+            <a href="#how" class="btn-secondary">
+                Discover how it works
+            </a>
+        </div>
+
+        <div class="hero-note">
+            <span class="online-dot"></span>
+            Every small action counts. Start today.
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="art-circle">
+            <div class="art-leaf">🌿</div>
+            <div class="art-device">♻</div>
+            <div class="art-caption">
+                <strong>RECYCLE.</strong>
+                <span>REWARD. REPEAT.</span>
+            </div>
+        </div>
+        <div class="floating-card card-one">
+            🌱 Small steps matter
+        </div>
+        <div class="floating-card card-two">
+            ✨ Earn EcoPoints
+        </div>
+    </div>
+</section>
+
+<section class="stats-strip">
+    <div>
+        <strong>{{ total_items }}</strong>
+        <span>Items responsibly collected</span>
+    </div>
+    <div>
+        <strong>{{ total_users }}</strong>
+        <span>Community members</span>
+    </div>
+    <div>
+        <strong>01</strong>
+        <span>Planet worth protecting</span>
+    </div>
+</section>
+
+<section class="section" id="how">
+    <div class="section-heading">
+        <div class="eyebrow">YOUR JOURNEY STARTS HERE</div>
+        <h2>Good for the planet.<br><span>Great for you.</span></h2>
+        <p>Three simple steps to turn electronic waste into positive action.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <span class="step-label">01 / SUBMIT</span>
+            <h3>Give it a new purpose</h3>
+            <p>Tell us what electronic waste you want to recycle and where it can be collected.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">♻️</div>
+            <span class="step-label">02 / COLLECT</span>
+            <h3>Make the right move</h3>
+            <p>Your collection request is reviewed and your items are responsibly collected.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <span class="step-label">03 / CELEBRATE</span>
+            <h3>Get rewarded</h3>
+            <p>Earn EcoPoints, unlock achievements and celebrate your contribution.</p>
+        </div>
+    </div>
+</section>
+
+<section class="challenge-banner">
+    <div>
+        <div class="eyebrow light">✦ THE ECO CHALLENGE</div>
+        <h2>One small action.<br>A lasting difference.</h2>
+        <p>Challenge yourself to recycle three electronic items and inspire others to join.</p>
+        <a href="/register" class="btn-light">Accept the challenge ↗</a>
+    </div>
+    <div class="challenge-art">🌍</div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div class="eyebrow">A LITTLE MOTIVATION</div>
+        <h2>Be the reason<br><span>someone recycles today.</span></h2>
+    </div>
+
+    <div class="quote-card">
+        <div class="quote-mark">“</div>
+        <h3 id="ecoQuote">
+            The greatest threat to our planet is the belief that someone else will save it.
+        </h3>
+        <button class="quote-button" onclick="newQuote()">
+            Inspire me again ↻
+        </button>
+    </div>
+</section>
+
+<section class="final-cta">
+    <h2>Ready to make your<br>first green move?</h2>
+    <p>Join a community that believes every action matters.</p>
+    <a href="/register" class="btn-primary">Become an Eco Hero ↗</a>
+</section>
+
+{% endblock %}

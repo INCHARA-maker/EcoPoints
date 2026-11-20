@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+
+{% block title %}Eco Champions | EcoPoints{% endblock %}
+
+{% block content %}
+
+<section class="section leaderboard-section">
+    <div class="eyebrow">CELEBRATING OUR COMMUNITY</div>
+    <h1>Meet the <span>Eco Champions.</span></h1>
+    <p>Every point represents a positive recycling contribution.</p>
+
+    <div class="leaderboard">
+        {% for user in users %}
+        <div class="leader-row">
+            <div class="rank">
+                {% if loop.index == 1 %}🥇
+                {% elif loop.index == 2 %}🥈
+                {% elif loop.index == 3 %}🥉
+                {% else %}{{ loop.index }}
+                {% endif %}
+            </div>
+
+            <div class="leader-avatar">{{ user.name[0]|upper }}</div>
+
+            <div class="leader-name">{{ user.name }}</div>
+
+            <div class="leader-points">{{ user.points }} ✳</div>
+        </div>
+        {% else %}
+        <p>Be the first Eco Champion. Start recycling today!</p>
+        {% endfor %}
+    </div>
+
+    <div class="encouragement">
+        Your journey is not about being better than others.
+        It's about making a better choice every day. 💚
+    </div>
+</section>
+
+{% endblock %}
